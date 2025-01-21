@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Configuration de base pour Axios
 const api = axios.create({
-  baseURL: 'http://localhost:8082/ens', // URL de base sans le / à la fin
+  baseURL: 'http://localhost:8080/ens', // URL de base sans le / à la fin
 });
 
 // Récupérer tous les enseignants
