@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getEnseignants } from "../services/api"; // Importez votre service API
-import "./EnseignantList.css"; // Fichier CSS pour styliser le tableau
+import { getEnseignants } from "../services/api";
 
 const EnseignantList = () => {
   const [enseignants, setEnseignants] = useState([]);
@@ -28,16 +27,18 @@ const EnseignantList = () => {
   };
 
   return (
-    <div className="enseignant-list-container">
-      <h2>Liste des Enseignants</h2>
+    <div className="p-8 bg-gray-50 min-h-screen">
+      <h2 className="text-2xl font-semibold text-blue-600 mb-6">
+        Liste des Enseignants
+      </h2>
       {enseignants.length > 0 ? (
-        <div className="table-and-form">
-          <table className="enseignant-table">
-            <thead>
+        <div className="grid grid-cols-2 gap-8">
+          <table className="table-auto border-collapse w-full bg-white shadow-md rounded-lg overflow-hidden">
+            <thead className="bg-blue-600 text-white">
               <tr>
-                <th>Code</th>
-                <th>Nom</th>
-                <th>Prénom</th>
+                <th className="px-4 py-2">Code</th>
+                <th className="px-4 py-2">Nom</th>
+                <th className="px-4 py-2">Prénom</th>
               </tr>
             </thead>
             <tbody>
@@ -45,115 +46,141 @@ const EnseignantList = () => {
                 <tr
                   key={enseignant.noEnseignant}
                   onClick={() => handleRowClick(enseignant)}
-                  className={
-                    selectedEnseignant?.noEnseignant === enseignant.noEnseignant
-                      ? "selected-row"
-                      : ""
-                  }
+                  className={`cursor-pointer ${
+                    selectedEnseignant?.noEnseignant ===
+                    enseignant.noEnseignant
+                      ? "bg-blue-200"
+                      : "hover:bg-blue-50"
+                  }`}
                 >
-                  <td>{enseignant.noEnseignant}</td>
-                  <td>{enseignant.nom}</td>
-                  <td>{enseignant.prenom}</td>
+                  <td className="border px-4 py-2">{enseignant.noEnseignant}</td>
+                  <td className="border px-4 py-2">{enseignant.nom}</td>
+                  <td className="border px-4 py-2">{enseignant.prenom}</td>
                 </tr>
               ))}
             </tbody>
           </table>
 
           {selectedEnseignant && (
-            <div className="enseignant-form">
-              <h3>Modifier l'enseignant</h3>
+            <div className="bg-white shadow-md rounded-lg p-6">
+              <h3 className="text-lg font-semibold text-blue-600 mb-4">
+                Modifier l'enseignant
+              </h3>
               <form>
-                <div className="form-group">
-                  <label>Type</label>
+                <div className="mb-4">
+                  <label className="block text-gray-700 font-medium mb-2">
+                    Type
+                  </label>
                   <select
                     name="type"
                     value={selectedEnseignant.type || ""}
                     onChange={handleInputChange}
+                    className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
                   >
                     <option value="ENC">ENC</option>
-                    <option value="INT">
-                      INT
-                    </option>
+                    <option value="INT">INT</option>
                   </select>
                 </div>
 
-
                 {selectedEnseignant.type === "ENC" ? (
                   <>
-                    <div className="form-group">
-                      <label>Email</label>
+                    <div className="mb-4">
+                      <label className="block text-gray-700 font-medium mb-2">
+                        Email
+                      </label>
                       <input
                         type="text"
                         name="enc_ubo_email"
                         value={selectedEnseignant.enc_ubo_email || ""}
                         onChange={handleInputChange}
+                        className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
                       />
                     </div>
-                    <div className="form-group">
-                      <label>Téléphone UBO</label>
+                    <div className="mb-4">
+                      <label className="block text-gray-700 font-medium mb-2">
+                        Téléphone UBO
+                      </label>
                       <input
                         type="text"
                         name="enc_ubo_tel"
                         value={selectedEnseignant.enc_ubo_tel || ""}
                         onChange={handleInputChange}
+                        className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
                       />
                     </div>
-                    <div className="form-group">
-                      <label>Téléphone Personel</label>
+                    <div className="mb-4">
+                      <label className="block text-gray-700 font-medium mb-2">
+                        Téléphone Personnel
+                      </label>
                       <input
                         type="text"
                         name="encPersoTel"
                         value={selectedEnseignant.encPersoTel || ""}
                         onChange={handleInputChange}
+                        className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
                       />
                     </div>
-                    <div className="form-group">
-                      <label>Email Personel</label>
+                    <div className="mb-4">
+                      <label className="block text-gray-700 font-medium mb-2">
+                        Email Personnel
+                      </label>
                       <input
                         type="text"
                         name="enc_perso_email"
                         value={selectedEnseignant.enc_perso_email || ""}
                         onChange={handleInputChange}
+                        className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
                       />
                     </div>
                   </>
                 ) : (
                   <>
-
-                    <div className="form-group">
-                      <label>Email</label>
+                    <div className="mb-4">
+                      <label className="block text-gray-700 font-medium mb-2">
+                        Email
+                      </label>
                       <input
                         type="text"
                         name="int_prof_email"
                         value={selectedEnseignant.int_prof_email || ""}
                         onChange={handleInputChange}
+                        className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
                       />
                     </div>
-                    <div className="form-group">
-                      <label>Téléphone</label>
+                    <div className="mb-4">
+                      <label className="block text-gray-700 font-medium mb-2">
+                        Téléphone
+                      </label>
                       <input
                         type="text"
                         name="int_prof_tel"
                         value={selectedEnseignant.int_prof_tel || ""}
                         onChange={handleInputChange}
+                        className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
                       />
                     </div>
-                    <div className="form-group">
-                      <label>Portable</label>
+                    <div className="mb-4">
+                      <label className="block text-gray-700 font-medium mb-2">
+                        Portable
+                      </label>
                       <input
                         type="text"
                         name="tel_port"
                         value={selectedEnseignant.tel_port || ""}
                         onChange={handleInputChange}
+                        className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
                       />
                     </div>
-                    <div className="form-group">
-                      <label>Société</label>
+                    <div className="mb-4">
+                      <label className="block text-gray-700 font-medium mb-2">
+                        Société
+                      </label>
                       <input
                         type="text"
                         name="int_soc_nom"
                         value={selectedEnseignant.int_soc_nom || ""}
                         onChange={handleInputChange}
+                        className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
                       />
                     </div>
                   </>
@@ -163,7 +190,7 @@ const EnseignantList = () => {
           )}
         </div>
       ) : (
-        <p>Aucun enseignant trouvé.</p>
+        <p className="text-gray-600">Aucun enseignant trouvé.</p>
       )}
     </div>
   );
